@@ -2,5 +2,7 @@
 
 click
 Jinja2
+jmespath
+requests
 simplejson
 spylogger[pretty]
