@@ -1,13 +1,15 @@
 import json
 import os
-import pickle
 
 import click
 from jinja2 import Template
 
 from marathon_cli.output import format_json
 from marathon_cli.settings import LOGGER
+from marathon_cli.utils import pickle_object
 from marathon_cli.x import put
+
+_savefile_tmpl = 'put-app-{}-response.pickle'
 
 
 @click.command()
@@ -36,7 +38,7 @@ def cli(app_id, template_file, template_vars, pickle_it, dry_run):
 
     ::
 
-        marathon put-app --dry-run my-app app.json.j2 prj_key=foo env=AWS_ACCOUNT_ID app_env=dev file=VERSION
+        marathon put-app --dry-run --pickle my-app app.json.j2 prj_key=foo env=AWS_ACCOUNT_ID app_env=dev file=VERSION
     """
     uri = 'apps/' + app_id
     LOGGER.debug({'app_id': app_id, 'uri': uri, 'template_file': template_file, 'template_vars': template_vars})
@@ -65,7 +67,7 @@ def cli(app_id, template_file, template_vars, pickle_it, dry_run):
     LOGGER.debug({'response': response})
 
     if pickle_it:
-        pickle.dump(response, open('put-app-{}-response.pickle'.format(app_id), 'w'))
+        pickle_object(response, _savefile_tmpl.format(app_id))
 
     click.echo(format_json(response.json()))
 

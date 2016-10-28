@@ -2,12 +2,16 @@ import click
 
 from marathon_cli.output import format_json
 from marathon_cli.settings import LOGGER
+from marathon_cli.utils import pickle_object
 from marathon_cli.x import get
+
+_savefile_tmpl = 'apps-response.pickle'
 
 
 @click.command()
+@click.option('-p', '--pickle', 'pickle_it', is_flag=True, help='pickle the response object and save it')
 @click.argument('app_ids', nargs=-1)
-def cli(app_ids):
+def cli(app_ids, pickle_it):
     """Get apps deployed to a marathon instance.
 
     Retrieve all apps when no app ids are given.
@@ -22,7 +26,12 @@ def cli(app_ids):
 
     LOGGER.debug({'app_ids': app_ids, 'uri': uri})
 
-    apps = get(uri).json()
+    apps = get(uri)
+
+    if pickle_it:
+        pickle_object(apps, _savefile_tmpl)
+
+    apps = apps.json()
 
     if len(app_ids) == 1:
         click.echo(format_json(apps))

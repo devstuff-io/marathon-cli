@@ -45,3 +45,4 @@ docs/services.rst
 node_modules/
 .deps/
 *.pickle
+pickles
