@@ -5,7 +5,7 @@ from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import get
 
-_savefile_tmpl = 'app-versions-{}-response.pickle'
+_savefile_tmpl = 'app-versions-{}'
 
 
 @click.command()

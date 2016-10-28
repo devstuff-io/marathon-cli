@@ -5,7 +5,7 @@ from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import get
 
-_savefile_tmpl = 'raw-response.pickle'
+_savefile_tmpl = 'raw-{}'
 
 
 @click.command()
@@ -28,7 +28,7 @@ def cli(uri, options, method, pickle_it):
     response = get(uri)
 
     if pickle_it:
-        pickle_object(response, _savefile_tmpl)
+        pickle_object(response, _savefile_tmpl.format(uri.replace('/', '__')))
 
     click.echo(format_json(response.json()))
 

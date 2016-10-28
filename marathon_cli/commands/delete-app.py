@@ -5,7 +5,7 @@ from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import delete
 
-_savefile_tmpl = 'delete-app-{}-response.pickle'
+_savefile_tmpl = 'delete-app-{}'
 
 
 @click.command()

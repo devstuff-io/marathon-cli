@@ -5,7 +5,14 @@ from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import delete
 
-_savefile_tmpl = 'kill-tasks-{}-response.pickle'
+_savefile_tmpl = 'delete-app-tasks-{}'
+
+
+def __pickle_it(thing, uri):
+    pickle_object(
+        thing,
+        _savefile_tmpl.format(uri.replace('/', '__'))
+    )
 
 
 @click.command()
@@ -32,23 +39,15 @@ def cli(app_id, app_tasks, pickle_it):
             if not task_id.startswith('/'):
                 task_id = '/' + task_id
             LOGGER.info({'DELETE': uri + task_id})
-            theuri = uri + task_id
-            thing = delete(theuri)
+            thing = delete(uri + task_id)
             if pickle_it:
-                pickle_object(
-                    thing,
-                    _savefile_tmpl.format(theuri.replace('/', '-'))
-                )
-
+                __pickle_it(thing, uri + task_id)
             responses.append(thing.json())
     else:
         LOGGER.info({'DELETE': uri})
         thing = delete(uri)
         if pickle_it:
-            pickle_object(
-                thing,
-                _savefile_tmpl.format(uri.replace('/', '-'))
-            )
+            __pickle_it(thing, uri)
         responses.append(thing.json())
 
     click.echo(format_json({'Killed': responses}))

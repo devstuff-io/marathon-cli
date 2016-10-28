@@ -9,7 +9,7 @@ from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import put
 
-_savefile_tmpl = 'put-app-{}-response.pickle'
+_savefile_tmpl = 'put-app-{}'
 
 
 @click.command()
