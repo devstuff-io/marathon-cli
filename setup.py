@@ -25,7 +25,7 @@ setup(
     install_requires=[str(ir.req) for ir in INSTALL_REQS],
     entry_points={
         'console_scripts': [
-            'marathon-cli=marathon_cli:main'
+            'marathon=marathon_cli:main'
         ],
     }
 )
