@@ -1,5 +1,3 @@
--e git+git://github.com/john2x/solarized-pygment.git#egg=pygments-solarized
-
 click
 Jinja2
 jmespath
