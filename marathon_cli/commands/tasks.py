@@ -1,6 +1,6 @@
 import click
+from pretty_json import format_json
 
-from marathon_cli.output import format_json
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import get
 

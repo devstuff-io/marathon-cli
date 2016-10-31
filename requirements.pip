@@ -1,8 +1,6 @@
 click==6.6
 Jinja2==2.8
 jmespath==0.9.0
-Pygments==2.1.3
-pygments-json==0.1
+pretty-json==1.0.1
 requests==2.11.1
-simplejson==3.10.0
 spylogger[pretty]==1.1.2

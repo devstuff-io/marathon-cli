@@ -1,7 +1,7 @@
 import click
 import jmespath
+from pretty_json import format_json
 
-from marathon_cli.output import format_json
 from marathon_cli.settings import LOGGER
 from marathon_cli.x import get
 

@@ -3,8 +3,8 @@ import os
 
 import click
 from jinja2 import Template
+from pretty_json import format_json
 
-from marathon_cli.output import format_json
 from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import put
