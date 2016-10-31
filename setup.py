@@ -19,7 +19,7 @@ setup(
     include_package_data=True,
     description='command line utility for marathon api requests',
     long_description='command line utility for marathon api requests',
-    url='https://github.com/SPScommerce/marathon-cli',
+    url='https://github.com/meganlkm/marathon-cli',
     author='meganlkm',
     author_email='megan.lkm@gmail.com',
     install_requires=[str(ir.req) for ir in INSTALL_REQS],
