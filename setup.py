@@ -13,7 +13,7 @@ INSTALL_REQS = parse_requirements(
 )
 
 setup(
-    name='marathon_cli',
+    name='marathon-cli',
     version=VERSION,
     packages=find_packages(),
     include_package_data=True,

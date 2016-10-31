@@ -1,6 +1,7 @@
 click
 Jinja2
 jmespath
+pygments-json
 requests
 simplejson
 spylogger[pretty]
