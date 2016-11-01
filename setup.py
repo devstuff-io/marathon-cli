@@ -1,20 +1,19 @@
-import os
-from pip.req import parse_requirements
-from pip.download import PipSession
+import ast
+import re
 from setuptools import setup, find_packages
 
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-BASEDIR = os.path.dirname(os.path.abspath(__file__))
-VERSION = open(os.path.join(BASEDIR, 'VERSION')).read().strip()
-INSTALL_REQS = parse_requirements(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), 'requirements.pip'),
-    session=PipSession()
-)
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+with open('marathon_cli/__init__.py', 'rb') as f:
+    version = str(ast.literal_eval(
+        _version_re.search(f.read().decode('utf-8')).group(1)
+    ))
+
 
 setup(
     name='marathon-cli',
-    version=VERSION,
+    version=version,
+    license='MIT',
     packages=find_packages(),
     include_package_data=True,
     description='command line utility for marathon api requests',
@@ -22,10 +21,26 @@ setup(
     url='https://github.com/meganlkm/marathon-cli',
     author='meganlkm',
     author_email='megan.lkm@gmail.com',
-    install_requires=[str(ir.req) for ir in INSTALL_REQS],
+    keywords=['mesos', 'marathon', 'utility'],
+    install_requires=[
+        'click==6.6',
+        'Jinja2==2.8',
+        'jmespath==0.9.0',
+        'pretty-json==1.0.1',
+        'requests==2.11.1',
+        'spylogger[pretty]==1.1.2',
+    ],
     entry_points={
         'console_scripts': [
             'marathon=marathon_cli:main'
-        ],
-    }
+        ]
+    },
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Topic :: System :: Software Distribution',
+        'Topic :: Utilities'
+    ]
 )

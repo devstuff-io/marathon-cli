@@ -2,11 +2,16 @@ import os
 
 from spylogger import get_logger
 
+from marathon_cli.exceptions import MissingEnvironmentVariable
+
 
 def __marathon_url():
     url = os.getenv('MARATHON_URL')
-    if not url.endswith('/'):
-        url += '/'
+    try:
+        if not url.endswith('/'):
+            url += '/'
+    except AttributeError:
+        raise MissingEnvironmentVariable('MARATHON_URL')
     return url
 
 
