@@ -15,10 +15,11 @@ _savefile_tmpl = 'put-app-{}'
 @click.command()
 @click.option('-p', '--pickle', 'pickle_it', is_flag=True, help='pickle the response object and save it')
 @click.option('--dry-run', is_flag=True, help='generate the request and show it - do not send to marathon')
+@click.option('--force', is_flag=True, help='Override app lock')
 @click.argument('app_id')
 @click.argument('template_file', type=click.File('rb'))
 @click.argument('template_vars', nargs=-1)
-def cli(app_id, template_file, template_vars, pickle_it, dry_run):
+def cli(app_id, template_file, template_vars, pickle_it, dry_run, force):
     """Update or create an app with id.
 
     :param app_id: **required**. Ensure create or update app with this name
@@ -41,6 +42,8 @@ def cli(app_id, template_file, template_vars, pickle_it, dry_run):
         marathon put-app --dry-run --pickle my-app app.json.j2 prj_key=foo env=AWS_ACCOUNT_ID app_env=dev file=VERSION
     """
     uri = 'apps/' + app_id
+    if force:
+        uri += '/?force=true'
     LOGGER.debug({'app_id': app_id, 'uri': uri, 'template_file': template_file, 'template_vars': template_vars})
 
     jinja_vars = {'app_id': app_id}
