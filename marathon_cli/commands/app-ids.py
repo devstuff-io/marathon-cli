@@ -13,6 +13,7 @@ def cli():
     LOGGER.debug('Get the ids of all apps deployed to a marathon instance.')
     apps = get('apps').json()
     apps = jmespath.search('apps[*].id', apps)
+    apps = sorted(apps)
     click.echo(format_json({'app-ids': apps, 'count': len(apps)}))
 
 
