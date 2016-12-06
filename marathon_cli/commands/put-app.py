@@ -5,11 +5,8 @@ import click
 from jinja2 import Template
 from pretty_json import format_json
 
-from marathon_cli.settings import LOGGER
 from marathon_cli.utils import pickle_object
 from marathon_cli.x import put
-
-_savefile_tmpl = 'put-app-{}'
 
 
 @click.command()
@@ -19,7 +16,8 @@ _savefile_tmpl = 'put-app-{}'
 @click.argument('app_id')
 @click.argument('template_file', type=click.File('rb'))
 @click.argument('template_vars', nargs=-1)
-def cli(app_id, template_file, template_vars, pickle_it, dry_run, force):
+@click.pass_context
+def cli(ctx, app_id, template_file, template_vars, pickle_it, dry_run, force):
     """Update or create an app with id.
 
     :param app_id: **required**. Ensure create or update app with this name
@@ -44,7 +42,7 @@ def cli(app_id, template_file, template_vars, pickle_it, dry_run, force):
     uri = 'apps/' + app_id
     if force:
         uri += '/?force=true'
-    LOGGER.debug({'app_id': app_id, 'uri': uri, 'template_file': template_file, 'template_vars': template_vars})
+    ctx.obj['logger'].debug({'app_id': app_id, 'uri': uri, 'template_file': template_file, 'template_vars': template_vars})
 
     jinja_vars = {'app_id': app_id}
     if template_vars:
@@ -67,13 +65,9 @@ def cli(app_id, template_file, template_vars, pickle_it, dry_run, force):
         return
 
     response = put(uri, json=app_request)
-    LOGGER.debug({'response': response})
+    ctx.obj['logger'].debug({'response': response})
 
     if pickle_it:
-        pickle_object(response, _savefile_tmpl.format(app_id))
+        pickle_object(response, 'put-app-{}'.format(app_id))
 
     click.echo(format_json(response.json()))
-
-
-if __name__ == '__main__':
-    cli()

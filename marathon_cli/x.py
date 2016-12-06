@@ -1,5 +1,6 @@
 import requests
 
+from marathon_cli.exceptions import MethodNotSupported
 from marathon_cli.settings import MARATHON_URL, MARATHON_AUTH
 
 
@@ -45,3 +46,15 @@ def put(uri, *args, **kwargs):
         auth=MARATHON_AUTH,
         **kwargs
     )
+
+
+def get_method(name):
+    if name.lower() == 'get':
+        return get
+    if name.lower() == 'delete':
+        return delete
+    if name.lower() == 'post':
+        return post
+    if name.lower() == 'put':
+        return put
+    raise MethodNotSupported(name)

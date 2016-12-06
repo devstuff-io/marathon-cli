@@ -5,4 +5,4 @@ FILE_PATH = os.path.join(BASEDIR, 'files')
 TEMPLATE_PATH = os.path.join(BASEDIR, 'template')
 
 COMMANDS = []
-COMMAND_OPTS = [' -h, ?, --help']
+COMMAND_OPTS = [' -h, --help']
