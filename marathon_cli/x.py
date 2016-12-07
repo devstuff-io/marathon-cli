@@ -1,10 +1,18 @@
 import requests
 
 from marathon_cli.exceptions import MethodNotSupported
-from marathon_cli.settings import MARATHON_URL, MARATHON_AUTH
+from marathon_cli.settings import MARATHON_AUTH, MARATHON_URL, MARATHON_VERSION
+
+
+def build_url(uri, with_version=True):
+    url = MARATHON_URL
+    if with_version:
+        url += MARATHON_VERSION
+    return url + uri
 
 
 def clean_uri(uri):
+    uri.replace('//', '/')
     if uri.startswith('/'):
         uri = uri[1:]
     if uri.endswith('/'):
@@ -12,37 +20,37 @@ def clean_uri(uri):
     return uri
 
 
-def get(uri, *args, **kwargs):
+def get(uri, with_version=True, *args, **kwargs):
     uri = clean_uri(uri)
     return requests.get(
-        MARATHON_URL + uri,
+        build_url(uri, with_version),
         auth=MARATHON_AUTH,
         **kwargs
     )
 
 
-def delete(uri, *args, **kwargs):
+def delete(uri, with_version=True, *args, **kwargs):
     uri = clean_uri(uri)
     return requests.delete(
-        MARATHON_URL + uri,
+        build_url(uri, with_version),
         auth=MARATHON_AUTH,
         **kwargs
     )
 
 
-def post(uri, *args, **kwargs):
+def post(uri, with_version=True, *args, **kwargs):
     uri = clean_uri(uri)
     return requests.post(
-        MARATHON_URL + uri,
+        build_url(uri, with_version),
         auth=MARATHON_AUTH,
         **kwargs
     )
 
 
-def put(uri, *args, **kwargs):
+def put(uri, with_version=True, *args, **kwargs):
     uri = clean_uri(uri)
     return requests.put(
-        MARATHON_URL + uri,
+        build_url(uri, with_version),
         auth=MARATHON_AUTH,
         **kwargs
     )
