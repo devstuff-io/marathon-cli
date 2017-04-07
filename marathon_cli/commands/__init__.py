@@ -15,7 +15,7 @@ def get_request(ctx, uri, pickle_it, with_version=True):
         'connection.config': response.connection.config,
         'elapsed': str(response.elapsed),
         'encoding': response.encoding,
-        'headers': dict((k, v) for k, v in response.headers.iteritems()),
+        'headers': dict(response.headers),
         'status_code': response.status_code,
         'url': response.url,
     })
