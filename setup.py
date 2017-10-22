@@ -27,9 +27,9 @@ setup(
     include_package_data=True,
     description='command line utility for marathon api requests',
     long_description='command line utility for marathon api requests',
-    url='https://github.com/meganlkm/marathon-cli',
+    url='https://github.com/devstuff-io/marathon-cli',
     author='meganlkm',
-    author_email='megan.lkm@gmail.com',
+    author_email='devstuff.io@gmail.com',
     keywords=['mesos', 'marathon', 'utility'],
     install_requires=requirements,
     entry_points={
